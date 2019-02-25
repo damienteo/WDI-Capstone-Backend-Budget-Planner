@@ -2,7 +2,7 @@
   "name": "budget-planner-api",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -13,6 +13,7 @@
     "body-parser": "^1.18.3",
     "cors": "^2.8.5",
     "express": "^4.16.4",
+    "js-sha256": "^0.9.0",
     "pg": "^7.8.1"
   }
 }

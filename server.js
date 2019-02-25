@@ -1,26 +1,38 @@
-let express = require('express');
-let bodyParser = require('body-parser');
-let morgan = require('morgan');
 let pg = require('pg');
-var cors = require('cors')
 
-const PORT = 4000;
+const users = require('./models/users');
 
-let pool = new pg.Pool({
-	user: 'postgres',
-    password: 'postgres',
-    host: '127.0.0.1',
-    database: 'budgetplanner',
-    port: 5432,
-})
+var configs;
 
-let app = express();
+if (process.env.DATABASE_URL) {
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+    const params = url.parse(process.env.DATABASE_URL);
+    const auth = params.auth.split(':');
 
-app.use(morgan('dev'));
-app.use(cors());
+    configs = {
+        user: auth[0],
+        password: auth[1],
+        host: params.hostname,
+        port: params.port,
+        database: params.pathname.split('/')[1],
+        ssl: true
+    };
+
+} else {
+
+    configs = {
+		user: 'postgres',
+	    password: 'postgres',
+	    host: '127.0.0.1',
+	    database: 'budgetplanner',
+	    port: 5432,
+	};
+}
+
+let pool = new pg.Pool(configs)
+
+
+
 
 // pool.connect((err, db, done) => {
 // 	if (err) {
@@ -72,27 +84,38 @@ app.use(cors());
 // 	})
 // })
 
-app.post('/api/new-user', function(request, response) {
-	console.log(request.body);
-	var name = request.body.user_name;
-	var password = request.body.user_password;
+// app.post('/api/new-user', function(request, response) {
+// 	console.log(request.body);
+// 	let name = request.body.user_name;
+// 	let password = request.body.user_password;
 
-	pool.connect((err, db, done) => {
-		if (err) {
-			return response.status(400).send(err);
-		} else {
-			db.query('INSERT INTO users (name, password) VALUES($1, $2) RETURNING *',[name,password], ( err, table ) =>{
-				if(err) {
-					return response.status(400).send(err);
-				} else {
-					console.log(table.rows);
-					response.status(201).send({message: 'Data Inserted'});
-				}
-			})
-		}
-	})
-})
+// 	pool.connect((err, db, done) => {
+// 		if (err) {
+// 			return response.status(400).send(err);
+// 		} else {
+// 			db.query('INSERT INTO users (name, password) VALUES($1, $2) RETURNING *',[name,password], ( err, table ) =>{
+// 				if(err) {
+// 					return response.status(400).send(err);
+// 				} else {
+// 					console.log(table.rows);
+// 					response.status(201).send({message: 'Data Inserted'});
+// 				}
+// 			})
+// 		}
+// 	})
+// })
 
+module.exports = {
+    /*
+     * ADD APP MODELS HERE
+     */
+    users: users(pool),
 
-app.listen(PORT, () => console.log('Listening on port' + PORT))
+    //make queries directly from here
+    queryInterface: (text, params, callback) => {
+        return pool.query(text, params, callback);
+    },
 
+    // get a reference to end the connection pool at server end
+    pool: pool
+};
