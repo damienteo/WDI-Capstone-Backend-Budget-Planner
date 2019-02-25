@@ -65,12 +65,8 @@ module.exports = (db) => {
 
     const userPassword = request => {
 
-        console.log(request);
-
         username = request.body.user_name;
         password = sha256(request.body.user_password);
-
-
 
     }
 
@@ -89,14 +85,14 @@ module.exports = (db) => {
             if (error) {
 
                 console.error('error getting username', error);
-                return response.status(400).send(err);
+                response.status(400).send(err);
 
             } else {
 
                 if (users === null) {
-                    response.status(201).send({message: 'Data Inserted'});
+                    response.status(201).send({registered: true, message: 'Successfully Registered'});
                 } else {
-                    response.status(201).send({message: 'Please pick another username'});
+                    response.status(201).send({registered: false, message: 'Please pick another username'});
                 }
             }
         });
@@ -108,42 +104,40 @@ module.exports = (db) => {
 
     // }
 
-    // let loggedin = (request, response) => {
+    let loggedin = (request, response) => {
 
-    //     userPassword(request);
+        userPassword(request);
 
-    //     db.users.loggedin(username, password, (error, users) => {
-    //         2
-    //         if (error) {
+        db.users.loggedin(username, password, (error, users) => {
 
-    //             console.error('error getting username', error);
-    //             response.status(500);
-    //             message = "Server error";
+            if (error) {
 
-    //         } else {
+                console.error('error getting username', error);
+                return response.status(400).send(err);
 
-    //             if (users === null) {
-    //                 message = "There is no such user. Please try again";
-    //             } else {
+            } else {
 
-    //                 let userId = users[0].id;
-    //                 let hashUserId = sha256(loginString + userId);
+                if (users === null) {
+                    response.status(201).send({loggedIn: false, message: 'There is no such user. Please try again'});
+                } else {
 
-    //                 if (users[0].password == password) {
+                    // let userId = users[0].id;
+                    // let hashUserId = sha256(loginString + userId);
 
-    //                     response.cookie('loggedin', hashUserId);
-    //                     response.cookie('userId', userId);
-    //                     authentication = true;
-    //                     message = "Successfully logged in.";
+                    if (users[0].password == password) {
 
-    //                 } else {
-    //                     message = "Password Incorrect";
-    //                 }
-    //             }
-    //         }
-    //         response.render('Message', { message, authentication });
-    //     });
-    // }
+                        // response.cookie('loggedin', hashUserId);
+                        // response.cookie('userId', userId);
+                        // authentication = true;
+                        response.status(201).send({loggedIn: true, message: 'Logged in successfully'});
+
+                    } else {
+                        response.status(201).send({loggedIn: false, message: 'Password Incorrect'});
+                    }
+                }
+            }
+        });
+    }
 
     // let logout = (request, response) => {
 
@@ -213,6 +207,7 @@ module.exports = (db) => {
      */
     return {
         registered,
+        loggedin
     };
 
 }

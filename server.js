@@ -84,27 +84,6 @@ let pool = new pg.Pool(configs)
 // 	})
 // })
 
-// app.post('/api/new-user', function(request, response) {
-// 	console.log(request.body);
-// 	let name = request.body.user_name;
-// 	let password = request.body.user_password;
-
-// 	pool.connect((err, db, done) => {
-// 		if (err) {
-// 			return response.status(400).send(err);
-// 		} else {
-// 			db.query('INSERT INTO users (name, password) VALUES($1, $2) RETURNING *',[name,password], ( err, table ) =>{
-// 				if(err) {
-// 					return response.status(400).send(err);
-// 				} else {
-// 					console.log(table.rows);
-// 					response.status(201).send({message: 'Data Inserted'});
-// 				}
-// 			})
-// 		}
-// 	})
-// })
-
 module.exports = {
     /*
      * ADD APP MODELS HERE

@@ -26,41 +26,26 @@ module.exports = (dbPoolInstance) => {
                 }
             }
         });
-
-        // dbPoolInstance.connect((err, db, done) => {
-        //     if (err) {
-        //         return response.status(400).send(err);
-        //     } else {
-        //         db.query('INSERT INTO users (name, password) VALUES($1, $2) RETURNING *',[username,password], ( err, table ) =>{
-        //             if(err) {
-        //                 return response.status(400).send(err);
-        //             } else {
-        //                 console.log(table.rows);
-        //                 response.status(201).send({message: 'Data Inserted'});
-        //             }
-        //         })
-        //     }
-        // })
     }
 
-    // let loggedin = (username, password, callback) => {
+    let loggedin = (username, password, callback) => {
 
-    //     const values = [username, password];
+        const values = [username, password];
 
-    //     dbPoolInstance.query('SELECT * from users WHERE name=$1', [username], (error, queryResult) => {
-    //         if (error) {
-    //             callback(error, null);
+        dbPoolInstance.query('SELECT * from users WHERE name=$1', [username], (error, queryResult) => {
+            if (error) {
+                callback(error, null);
 
-    //         } else {
+            } else {
 
-    //             if (queryResult.rows.length > 0) {
-    //                 callback(null, queryResult.rows);
-    //             } else {
-    //                 callback(null, null);
-    //             }
-    //         }
-    //     });
-    // }
+                if (queryResult.rows.length > 0) {
+                    callback(null, queryResult.rows);
+                } else {
+                    callback(null, null);
+                }
+            }
+        });
+    }
 
     // let profile = (currentUserId, callback) => {
 
@@ -134,7 +119,7 @@ module.exports = (dbPoolInstance) => {
 
     return {
         registered,
-        // loggedin,
+        loggedin,
         // profile
     };
 
