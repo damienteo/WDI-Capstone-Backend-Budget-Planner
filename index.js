@@ -8,7 +8,11 @@ const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.use(cors());
+var corsOptions = {
+	origin: 'https://my-budget-planner.herokuapp.com'
+}
+
+app.use(cors(corsOptions));
 
 // Import routes to match incoming requests
 require('./routes')(app, db);

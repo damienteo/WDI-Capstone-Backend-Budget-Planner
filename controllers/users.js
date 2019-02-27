@@ -1,9 +1,5 @@
 const sha256 = require('js-sha256');
-// const cookieParser = require('cookie-parser');
-
-const loginString = "Welcome to Grace";
-
-let message = '';
+const loginString = "Budget Planning is fun";
 
 module.exports = (db) => {
 
@@ -121,15 +117,12 @@ module.exports = (db) => {
                     response.status(201).send({loggedIn: false, message: 'There is no such user. Please try again'});
                 } else {
 
-                    // let userId = users[0].id;
-                    // let hashUserId = sha256(loginString + userId);
+                    let userId = users[0].id;
+                    let hashUserId = sha256(loginString + userId);
 
                     if (users[0].password == password) {
 
-                        // response.cookie('loggedin', hashUserId);
-                        // response.cookie('userId', userId);
-                        // authentication = true;
-                        response.status(201).send({loggedIn: true, message: 'Logged in successfully'});
+                        response.status(201).send({loggedIn: true, id: userId, userSession: hashUserId, message: 'Logged in successfully'});
 
                     } else {
                         response.status(201).send({loggedIn: false, message: 'Password Incorrect'});
@@ -138,30 +131,6 @@ module.exports = (db) => {
             }
         });
     }
-
-    // let logout = (request, response) => {
-
-    //     cookieAuthentication(request);
-
-    //     if (currentLog == null) {
-    //         message = "you are not logged in";
-    //     } else {
-
-    //         if (currentLog == compareLog) {
-
-    //             response.clearCookie('loggedin');
-    //             response.clearCookie('userId');
-
-    //             message = "You have logged out";
-
-    //         } else {
-    //             response.clearCookie('loggedin');
-    //             response.clearCookie('userId');
-    //             message = "Invalid User Profile. Please log in again.";
-    //         }
-    //     }
-    //     response.render('Message', { message });
-    // }
 
     // let profile = (request, response) => {
 
@@ -187,18 +156,6 @@ module.exports = (db) => {
 
     // }
 
-    // let index = (request, response) => {
-    //     // response.render('App');
-    //     response.render('../views/App');
-    //     // message = "This is the Index Page";
-    //     // frontAuthentication(request, response, message, 'Index');
-    // }
-
-    // let noPage = (request, response) => {
-    //     message = "Page not found";
-    //     frontAuthentication(request, response, message, 'Message');
-    // }
-
 
     /**
      * ===========================================
@@ -211,12 +168,3 @@ module.exports = (db) => {
     };
 
 }
-
-        // login,
-        // register,
-        // registered,
-        // loggedin,
-        // logout,
-        // profile,
-        // index,
-        // noPage

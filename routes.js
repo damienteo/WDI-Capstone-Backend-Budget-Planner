@@ -1,6 +1,7 @@
 module.exports = (app, db) => {
 
   const users = require('./controllers/users')(db);
+  const plans = require('./controllers/plans')(db);
 
   /*
    *  =========================================
@@ -22,12 +23,15 @@ module.exports = (app, db) => {
 
   /*
    *  =========================================
-   *  Entries
+   *  Plans
    *  =========================================
    */
 
+  // CRUD journals
 
- // CRUD journals
+  app.post('/api/new-plan', plans.newPlan);
+  // app.get('/api/view-plan', plans.viewPlan);
+  // app.get('/api/update-plan', plans.updatePlan);
 
  /*
    *  =========================================
