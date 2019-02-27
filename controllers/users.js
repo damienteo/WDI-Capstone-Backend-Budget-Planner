@@ -59,13 +59,6 @@ module.exports = (db) => {
     //     response.render(view, { message, authentication });
     // };
 
-    const userPassword = request => {
-
-        username = request.body.user_name;
-        password = sha256(request.body.user_password);
-
-    }
-
     // let register = (request, response) => {
 
     //     loginAuthentication(request, response);
@@ -74,7 +67,8 @@ module.exports = (db) => {
 
     let registered = (request, response) => {
 
-        userPassword(request);
+        let username = request.body.user_name;
+        let password = sha256(request.body.user_password);
 
         db.users.registered(username, password, (error, users) => {
 
