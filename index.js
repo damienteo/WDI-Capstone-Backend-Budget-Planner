@@ -5,15 +5,10 @@ var cors = require('cors')
 const db = require('./server');
 const app = express();
 
+app.use(cors());
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-
-var corsOptions = {
-	origin: 'https://my-budget-planner.herokuapp.com'
-}
-
-app.options('*', cors());
-// app.use(cors(corsOptions));
 
 // Import routes to match incoming requests
 require('./routes')(app, db);
