@@ -12,7 +12,7 @@ var corsOptions = {
 	origin: 'https://my-budget-planner.herokuapp.com'
 }
 
-app.options(*, cors());
+app.options('*', cors());
 // app.use(cors(corsOptions));
 
 // Import routes to match incoming requests
