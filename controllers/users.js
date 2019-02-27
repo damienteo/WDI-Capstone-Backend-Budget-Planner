@@ -80,7 +80,7 @@ module.exports = (db) => {
             if (error) {
 
                 console.error('error getting username', error);
-                response.status(400).send(err);
+                response.status(400).send(error);
 
             } else {
 
