@@ -19,8 +19,8 @@ require('./routes')(app, db);
  * ===================================
  */
 
-const PORT = process.env.PORT || 6000;
-const server = app.listen(PORT, () => console.log('Listening on port' + PORT))
+// const PORT = 
+const server = app.listen(process.env.PORT || 6000, () => console.log('Listening on port' + PORT))
 
 let onClose = function() {
 
