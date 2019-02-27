@@ -67,8 +67,10 @@ module.exports = (db) => {
 
     let registered = (request, response) => {
 
+        console.log(request);
+
         let username = request.body.user_name;
-        let password = request.body.user_password;
+        let password = sha256(request.body.user_password);
 
         console.log("username", username);
         console.log("password", password);
