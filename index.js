@@ -6,6 +6,7 @@ const db = require('./server');
 const app = express();
 
 app.use(cors());
+app.options('*', cors());
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
