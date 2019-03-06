@@ -19,8 +19,9 @@ module.exports = (dbPoolInstance) => {
                 if (queryResult.rows.length > 0) {
                     dbPoolInstance.query(`
                         UPDATE plans 
-                        SET (years = $1, monthlyIncome = $2, goal = $3) 
-                        WHERE user_id=$4*
+                        SET years = $1, monthlyIncome = $2, goal = $3
+                        WHERE user_id=$4
+                        RETURNING *
                     `, values, (error, queryResult) => {
                         callback(null, queryResult.rows[0]);
                     })
@@ -33,7 +34,6 @@ module.exports = (dbPoolInstance) => {
             }
         });
     }
-
 
     // let newPlan = (years, monthlyIncome, goal, callback) => {
 
