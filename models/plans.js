@@ -35,8 +35,29 @@ module.exports = (dbPoolInstance) => {
         });
     }
 
+    let getPlan = (userId, callback) => {
+
+        const values = [userId];
+
+        dbPoolInstance.query('SELECT * from plans WHERE user_id=$1', [userId], (error, queryResult) => {
+            if (error) {
+                // invoke callback function with results after query has executed
+                callback(error, null);
+
+            } else {
+
+                if (queryResult.rows.length > 0) {
+                    callback(null, queryResult.rows[0]);
+                } else {
+                    callback(null, null);
+                }
+            }
+        });
+    }
+
     return {
         setPlan,
+        getPlan
     };
 
 }

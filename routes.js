@@ -23,8 +23,7 @@ module.exports = (app, db) => {
   // CRUD plans
 
   app.post('/api/set-plan', plans.setPlan);
-  // app.get('/api/view-plan', plans.viewPlan);
-  // app.get('/api/update-plan', plans.updatePlan);
+  app.put('/api/get-plan', plans.getPlan);
 
   /*
    *  =========================================
