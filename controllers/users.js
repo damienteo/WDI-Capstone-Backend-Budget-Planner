@@ -23,9 +23,16 @@ module.exports = (db) => {
 
             } else {
 
-                if (users === null) {
+                //users will return values only in the event of a successful registration
+                if (users !== null) {
+                    console.log(users)
+                    let userId = users.id;
+                    let hashUserId = sha256(loginString + userId);
+
                     response.status(201).send({
                         registered: true,
+                        id: userId,
+                        userSession: hashUserId,
                         message: 'Successfully Registered'
                     });
                 } else {

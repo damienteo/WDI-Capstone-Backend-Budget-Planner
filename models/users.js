@@ -17,11 +17,11 @@ module.exports = (dbPoolInstance) => {
             } else {
 
                 if (queryResult.rows.length > 0) {
-                    callback(null, queryResult.rows[0]);
+                    callback(null, null);
 
                 } else {
                     dbPoolInstance.query('INSERT INTO users (name, password) VALUES($1, $2) RETURNING *', values, (error, queryResult) => {
-                        callback(null, null);
+                        callback(null, queryResult.rows[0]);
                     })
                 }
             }

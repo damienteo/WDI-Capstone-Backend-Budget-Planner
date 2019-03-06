@@ -13,7 +13,7 @@ module.exports = (db) => {
      */
 
 
-    let newPlan = (request, response) => {
+    let setPlan = (request, response) => {
 
         years = request.body.years;
         monthlyIncome = request.body.monthlyIncome;
@@ -21,7 +21,7 @@ module.exports = (db) => {
         userId = request.body.userId;
         userSession = request.body.userSession;
 
-        db.plans.newPlan(years, monthlyIncome, goal, userId, (error, users) => {
+        db.plans.setPlan(years, monthlyIncome, goal, userId, (error, users) => {
 
             if (error) {
 
@@ -50,7 +50,7 @@ module.exports = (db) => {
      * ===========================================
      */
     return {
-        newPlan
+        setPlan
     };
 
 }
