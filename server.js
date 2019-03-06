@@ -32,59 +32,6 @@ if (process.env.DATABASE_URL) {
 
 let pool = new pg.Pool(configs)
 
-
-
-
-// pool.connect((err, db, done) => {
-// 	if (err) {
-// 		return console.log(err);
-// 	} else {
-// 		db.query('select * from country', ( err, table ) =>{
-// 			if(err) {
-// 				return console.log(err);
-// 			} else {
-// 				console.log(table.rows);
-// 			}
-// 		})
-// 	}
-// })
-
-// pool.connect((err, db, done) => {
-// 	if (err) {
-// 		return console.log(err);
-// 	} else {
-
-// 		let country_name = 'Singapore';
-// 		let continent_name= 'Asia';
-// 		db.query('INSERT INTO country (country_name, continent_name) VALUES($1, $2) RETURNING *',[country_name,continent_name], ( err, table ) =>{
-// 			if(err) {
-// 				return console.log(err);
-// 			} else {
-// 				console.log(table.rows);
-// 				db.end();
-// 			}
-// 		})
-// 	}
-// })
-
-// app.get('/api/countries', function(request, response) {
-// 	// console.log(request.body);
-
-// 	pool.connect(function(err, db, done) {
-// 		if (err) {
-// 			return response.status(400).send(err);
-// 		} else {
-// 			db.query('SELECT * FROM country', function(err, table) {
-// 				if(err) {
-// 					return response.status(400).send(err);
-// 				} else {
-// 					return response.status(200).send(table.rows);
-// 				}
-// 			})
-// 		}
-// 	})
-// })
-
 module.exports = {
     /*
      * ADD APP MODELS HERE

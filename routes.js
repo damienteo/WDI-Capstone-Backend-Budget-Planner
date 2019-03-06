@@ -12,14 +12,7 @@ module.exports = (app, db) => {
   // CRUD users
 
   app.post('/api/new-user', users.registered);
-  // app.post('/users/registered', users.registered);
-
-  // Authentication
-
-  // app.get('/users/login', users.login);
   app.post('/api/login', users.loggedin);
-  // app.get('/users/logout', users.logout);
-  // app.get('/users/profile', users.profile);
 
   /*
    *  =========================================
@@ -27,7 +20,7 @@ module.exports = (app, db) => {
    *  =========================================
    */
 
-  // CRUD journals
+  // CRUD plans
 
   app.post('/api/new-plan', plans.newPlan);
   // app.get('/api/view-plan', plans.viewPlan);
@@ -39,7 +32,10 @@ module.exports = (app, db) => {
    *  =========================================
    */
 
-  // app.get('/', users.index);
-  // app.get('*', users.noPage);
+  app.get('/ping', (request, response) => {
+    response.status(201).send({
+      message: 'Successfully Pingged'
+    });
+  });
 
 };

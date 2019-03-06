@@ -16,6 +16,12 @@ app.use(bodyParser.urlencoded({
 // Import routes to match incoming requests
 require('./routes')(app, db);
 
+app.get('/ping', (request, response) => {
+    response.status(201).send({
+        message: 'Successfully Pingged'
+    });
+});
+
 /**
  * ===================================
  * Listen to requests on port 4000
