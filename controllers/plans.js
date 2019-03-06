@@ -1,5 +1,4 @@
 const sha256 = require('js-sha256');
-// const cookieParser = require('cookie-parser');
 
 const loginString = "Welcome to Grace";
 
@@ -19,8 +18,10 @@ module.exports = (db) => {
         years = request.body.years;
         monthlyIncome = request.body.monthlyIncome;
         goal = request.body.goal;
+        userId = request.body.userId;
+        userSession = request.body.userSession;
 
-        db.plans.newPlan(years, monthlyIncome, goal, (error, users) => {
+        db.plans.newPlan(years, monthlyIncome, goal, userId, (error, users) => {
 
             if (error) {
 
@@ -31,13 +32,11 @@ module.exports = (db) => {
 
                 if (users === null) {
                     response.status(201).send({
-                        registered: true,
                         message: 'Plan created'
                     });
                 } else {
                     response.status(201).send({
-                        registered: false,
-                        message: 'error creating plan'
+                        message: 'Plan updated'
                     });
                 }
             }

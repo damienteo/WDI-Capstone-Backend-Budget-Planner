@@ -2,6 +2,7 @@ let pg = require('pg');
 const url = require('url');
 
 const users = require('./models/users');
+const plans = require('./models/plans');
 
 var configs;
 
@@ -37,6 +38,7 @@ module.exports = {
      * ADD APP MODELS HERE
      */
     users: users(pool),
+    plans: plans(pool),
 
     //make queries directly from here
     queryInterface: (text, params, callback) => {
