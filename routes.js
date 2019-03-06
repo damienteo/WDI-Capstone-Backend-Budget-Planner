@@ -10,7 +10,7 @@ module.exports = (app, db) => {
    */
 
   // CRUD users
-  
+
   app.post('/api/new-user', users.registered);
   // app.post('/users/registered', users.registered);
 
@@ -33,7 +33,7 @@ module.exports = (app, db) => {
   // app.get('/api/view-plan', plans.viewPlan);
   // app.get('/api/update-plan', plans.updatePlan);
 
- /*
+  /*
    *  =========================================
    *  Miscellaneous
    *  =========================================

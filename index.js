@@ -9,7 +9,9 @@ app.use(cors());
 app.options('*', cors());
 
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({
+    extended: true
+}));
 
 // Import routes to match incoming requests
 require('./routes')(app, db);
@@ -23,7 +25,7 @@ require('./routes')(app, db);
 const PORT = process.env.PORT || 4000;
 const server = app.listen(PORT, () => console.log('Listening on port' + PORT))
 
-let onClose = function() {
+let onClose = function () {
 
     server.close(() => {
         console.log('Process terminated')

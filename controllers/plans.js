@@ -30,9 +30,15 @@ module.exports = (db) => {
             } else {
 
                 if (users === null) {
-                    response.status(201).send({registered: true, message: 'Plan created'});
+                    response.status(201).send({
+                        registered: true,
+                        message: 'Plan created'
+                    });
                 } else {
-                    response.status(201).send({registered: false, message: 'error creating plan'});
+                    response.status(201).send({
+                        registered: false,
+                        message: 'error creating plan'
+                    });
                 }
             }
         });

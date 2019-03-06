@@ -22,12 +22,12 @@ if (process.env.DATABASE_URL) {
 } else {
 
     configs = {
-		user: 'postgres',
-	    password: 'postgres',
-	    host: '127.0.0.1',
-	    database: 'budgetplanner',
-	    port: 5432,
-	};
+        user: 'postgres',
+        password: 'postgres',
+        host: '127.0.0.1',
+        database: 'budgetplanner',
+        port: 5432,
+    };
 }
 
 let pool = new pg.Pool(configs)

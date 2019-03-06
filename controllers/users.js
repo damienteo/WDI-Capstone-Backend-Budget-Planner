@@ -9,62 +9,6 @@ module.exports = (db) => {
      * ===========================================
      */
 
-    // let authentication = false;
-
-    // const cookieAuthentication = request => {
-
-    //     authentication = false;
-
-    //     currentUserId = request.cookies['userId'];
-    //     currentLog = request.cookies['loggedin'];
-    //     compareLog = sha256(loginString + currentUserId);
-
-    // }
-
-    // const loginAuthentication = (request, response, view) => {
-
-    //     // currentUserId = request.cookies['userId'];
-    //     // currentLog = request.cookies['loggedin'];
-    //     compareLog = sha256(loginString + currentUserId);
-
-    //     authentication = false;
-
-    //     if (currentLog == null) {
-    //         response.render(view);
-
-    //     } else {
-    //         if (currentLog == compareLog) {
-    //             authentication = true
-    //             message = "You are already logged in. Please log out first.";
-    //             response.render('Message', { message, authentication });
-    //         } else {
-    //             response.render(view);
-    //         }
-    //     }
-    // };
-
-    // const frontAuthentication = (request, response, message, view) => {
-
-    //     currentUserId = request.cookies['userId'];
-    //     currentLog = request.cookies['loggedin'];
-    //     compareLog = sha256(loginString + currentUserId);
-
-    //     authentication = false;
-
-    //     if (currentLog == compareLog) {
-    //         authentication = true
-
-    //     }
-
-    //     response.render(view, { message, authentication });
-    // };
-
-    // let register = (request, response) => {
-
-    //     loginAuthentication(request, response);
-
-    // }
-
     let registered = (request, response) => {
 
         let username = request.body.user_name;
@@ -80,19 +24,19 @@ module.exports = (db) => {
             } else {
 
                 if (users === null) {
-                    response.status(201).send({registered: true, message: 'Successfully Registered'});
+                    response.status(201).send({
+                        registered: true,
+                        message: 'Successfully Registered'
+                    });
                 } else {
-                    response.status(201).send({registered: false, message: 'Please pick another username'});
+                    response.status(201).send({
+                        registered: false,
+                        message: 'Please pick another username'
+                    });
                 }
             }
         });
     }
-
-    // let login = (request, response) => {
-
-    //     loginAuthentication(request, response, 'users/Login');
-
-    // }
 
     let loggedin = (request, response) => {
 
@@ -109,7 +53,10 @@ module.exports = (db) => {
             } else {
 
                 if (users === null) {
-                    response.status(201).send({loggedIn: false, message: 'There is no such user. Please try again'});
+                    response.status(201).send({
+                        loggedIn: false,
+                        message: 'There is no such user. Please try again'
+                    });
                 } else {
 
                     let userId = users[0].id;
@@ -117,40 +64,23 @@ module.exports = (db) => {
 
                     if (users[0].password == password) {
 
-                        response.status(201).send({loggedIn: true, id: userId, userSession: hashUserId, message: 'Logged in successfully'});
+                        response.status(201).send({
+                            loggedIn: true,
+                            id: userId,
+                            userSession: hashUserId,
+                            message: 'Logged in successfully'
+                        });
 
                     } else {
-                        response.status(201).send({loggedIn: false, message: 'Password Incorrect'});
+                        response.status(201).send({
+                            loggedIn: false,
+                            message: 'Password Incorrect'
+                        });
                     }
                 }
             }
         });
     }
-
-    // let profile = (request, response) => {
-
-    //     cookieAuthentication(request);
-
-    //     if (currentLog == null) {
-
-    //         message = "Please Login";
-    //         response.render('Message', { message });
-
-    //     } else {
-
-    //         if (currentLog == compareLog) {
-    //             authentication = true
-    //             db.users.profile(currentUserId, (error, results) => {
-    //                 response.render('users/Profile', { results, authentication });
-    //             });
-    //         } else {
-    //             message = "Invalid Profile";
-    //             response.render('Message', { message });
-    //         }
-    //     }
-
-    // }
-
 
     /**
      * ===========================================
