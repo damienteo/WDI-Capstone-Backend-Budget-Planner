@@ -3,6 +3,7 @@ const url = require('url');
 
 const users = require('./models/users');
 const plans = require('./models/plans');
+const expenses = require('./models/expenses');
 
 var configs;
 
@@ -39,6 +40,7 @@ module.exports = {
      */
     users: users(pool),
     plans: plans(pool),
+    expenses: expenses(pool),
 
     //make queries directly from here
     queryInterface: (text, params, callback) => {

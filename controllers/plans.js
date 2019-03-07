@@ -1,6 +1,6 @@
 const sha256 = require('js-sha256');
 
-const loginString = "Welcome to Grace";
+const loginString = "Budget Planning is fun";
 
 let message = '';
 
@@ -15,13 +15,13 @@ module.exports = (db) => {
 
     let setPlan = (request, response) => {
 
-        years = request.body.years;
-        monthlyIncome = request.body.monthlyIncome;
-        goal = request.body.goal;
-        userId = request.body.userId;
-        userSession = request.body.userSession;
+        let years = request.body.years;
+        let monthlyIncome = request.body.monthlyIncome;
+        let goal = request.body.goal;
+        let userId = request.body.userId;
+        let userSession = request.body.userSession;
 
-        db.plans.setPlan(years, monthlyIncome, goal, userId, (error, users) => {
+        db.plans.setPlan(years, monthlyIncome, goal, userId, (error, plans) => {
 
             if (error) {
 
@@ -30,7 +30,7 @@ module.exports = (db) => {
 
             } else {
 
-                if (users === null) {
+                if (plans === null) {
                     response.status(201).send({
                         message: 'Plan created'
                     });
@@ -45,10 +45,10 @@ module.exports = (db) => {
 
     let getPlan = (request, response) => {
 
-        userId = request.body.userId;
-        userSession = request.body.userSession;
+        let userId = request.body.userId;
+        let userSession = request.body.userSession;
 
-        db.plans.getPlan(userId, (error, users) => {
+        db.plans.getPlan(userId, (error, plans) => {
 
             if (error) {
 
@@ -57,14 +57,14 @@ module.exports = (db) => {
 
             } else {
 
-                if (users === null) {
+                if (plans === null) {
                     response.status(201).send({
                         message: 'No previous plan',
                         exist: false
                     });
                 } else {
                     response.status(201).send({
-                        plan: users,
+                        plan: plans,
                         message: 'Setting plan',
                         exist: true
                     });
