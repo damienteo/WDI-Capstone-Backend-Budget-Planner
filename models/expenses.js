@@ -14,43 +14,32 @@ module.exports = (dbPoolInstance) => {
         VALUES($1, $2, $3, $4) 
         RETURNING *
         `, values, (error, queryResult) => {
-            if (error) {
-                // invoke callback function with results after query has executed
-                callback(error, null);
 
-            } else {
+            dbPoolInstance.query(`
+                SELECT id, expense, month, reason 
+                FROM expenses 
+                WHERE user_id=$1
+            `, [userId], (error, queryResult) => {
 
-                if (queryResult.rows.length > 0) {
-                    callback(null, queryResult.rows[0]);
+                if (error) {
+                    // invoke callback function with results after query has executed
+                    callback(error, null);
+
                 } else {
-                    callback(null, null);
+
+                    if (queryResult.rows.length > 0) {
+                        callback(null, queryResult.rows);
+                    } else {
+                        callback(null, null);
+                    }
                 }
-            }
-        });
-    }
 
-    let getExpense = (userId, callback) => {
-
-        const values = [userId];
-
-        dbPoolInstance.query('SELECT * from expenses WHERE user_id=$1', [userId], (error, queryResult) => {
-            if (error) {
-                callback(error, null);
-
-            } else {
-
-                if (queryResult.rows.length > 0) {
-                    callback(null, queryResult.rows[0]);
-                } else {
-                    callback(null, null);
-                }
-            }
+            })
         });
     }
 
     return {
         setExpense,
-        // getExpenses
     };
 
 }

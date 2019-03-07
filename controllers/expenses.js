@@ -36,43 +36,13 @@ module.exports = (db) => {
                     });
                 } else {
                     response.status(201).send({
+                        expenses: expenses,
                         message: 'Expense created'
                     });
                 }
             }
         });
     }
-
-    let getExpenses = (request, response) => {
-
-        userId = request.body.userId;
-        userSession = request.body.userSession;
-
-        db.expenses.getExpenses(userId, (error, users) => {
-
-            if (error) {
-
-                console.error('Unable to get plan', error);
-                response.status(400).send(err);
-
-            } else {
-
-                if (users === null) {
-                    response.status(201).send({
-                        message: 'No previous plan',
-                        exist: false
-                    });
-                } else {
-                    response.status(201).send({
-                        plan: users,
-                        message: 'Setting plan',
-                        exist: true
-                    });
-                }
-            }
-        });
-    }
-
 
     /**
      * ===========================================
@@ -81,7 +51,6 @@ module.exports = (db) => {
      */
     return {
         setExpense,
-        getExpenses
     };
 
 }
