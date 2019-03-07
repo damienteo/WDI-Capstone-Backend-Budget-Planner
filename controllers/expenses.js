@@ -43,35 +43,35 @@ module.exports = (db) => {
         });
     }
 
-    // let getExpenses = (request, response) => {
+    let getExpenses = (request, response) => {
 
-    //     userId = request.body.userId;
-    //     userSession = request.body.userSession;
+        userId = request.body.userId;
+        userSession = request.body.userSession;
 
-    //     db.expenses.getExpenses(userId, (error, users) => {
+        db.expenses.getExpenses(userId, (error, users) => {
 
-    //         if (error) {
+            if (error) {
 
-    //             console.error('Unable to get plan', error);
-    //             response.status(400).send(err);
+                console.error('Unable to get plan', error);
+                response.status(400).send(err);
 
-    //         } else {
+            } else {
 
-    //             if (users === null) {
-    //                 response.status(201).send({
-    //                     message: 'No previous plan',
-    //                     exist: false
-    //                 });
-    //             } else {
-    //                 response.status(201).send({
-    //                     plan: users,
-    //                     message: 'Setting plan',
-    //                     exist: true
-    //                 });
-    //             }
-    //         }
-    //     });
-    // }
+                if (users === null) {
+                    response.status(201).send({
+                        message: 'No previous plan',
+                        exist: false
+                    });
+                } else {
+                    response.status(201).send({
+                        plan: users,
+                        message: 'Setting plan',
+                        exist: true
+                    });
+                }
+            }
+        });
+    }
 
 
     /**
@@ -81,7 +81,7 @@ module.exports = (db) => {
      */
     return {
         setExpense,
-        // getExpenses
+        getExpenses
     };
 
 }

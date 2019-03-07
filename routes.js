@@ -35,7 +35,7 @@ module.exports = (app, db) => {
   // CRUD expenses
 
   app.post('/api/set-expense', expenses.setExpense);
-  // app.put('/api/get-expenses', expenses.getExpenses);
+  app.put('/api/get-expenses', expenses.getExpenses);
 
 
   /*

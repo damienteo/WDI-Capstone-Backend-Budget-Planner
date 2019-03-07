@@ -39,19 +39,38 @@ module.exports = (dbPoolInstance) => {
 
         const values = [userId];
 
-        dbPoolInstance.query('SELECT * from plans WHERE user_id=$1', [userId], (error, queryResult) => {
-            if (error) {
-                // invoke callback function with results after query has executed
-                callback(error, null);
+        dbPoolInstance.query(`
+            SELECT * from plans 
+            WHERE user_id=$1
+        `, [userId], (error, queryResult) => {
 
-            } else {
+            let data = {};
+            data.plan = [];
+            data.plan.push(queryResult.rows[0]);
 
-                if (queryResult.rows.length > 0) {
-                    callback(null, queryResult.rows[0]);
-                } else {
-                    callback(null, null);
+            dbPoolInstance.query(`
+                SELECT id, expense, month, reason from expenses 
+                WHERE user_id=$1
+            `, [userId], (error, queryResult) => {
+
+                data.expenses = []
+                for (let i = 0; i < queryResult.rows.length; i++) {
+                    data.expenses.push(queryResult.rows[i]);
                 }
-            }
+
+                if (error) {
+                    // invoke callback function with results after query has executed
+                    callback(error, null);
+
+                } else {
+
+                    if (data) {
+                        callback(null, data);
+                    } else {
+                        callback(null, null);
+                    }
+                }
+            })
         });
     }
 

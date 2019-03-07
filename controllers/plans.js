@@ -48,7 +48,7 @@ module.exports = (db) => {
         let userId = request.body.userId;
         let userSession = request.body.userSession;
 
-        db.plans.getPlan(userId, (error, plans) => {
+        db.plans.getPlan(userId, (error, data) => {
 
             if (error) {
 
@@ -57,14 +57,14 @@ module.exports = (db) => {
 
             } else {
 
-                if (plans === null) {
+                if (data === null) {
                     response.status(201).send({
                         message: 'No previous plan',
                         exist: false
                     });
                 } else {
                     response.status(201).send({
-                        plan: plans,
+                        data: data,
                         message: 'Setting plan',
                         exist: true
                     });

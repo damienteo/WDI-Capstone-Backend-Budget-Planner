@@ -29,25 +29,24 @@ module.exports = (dbPoolInstance) => {
         });
     }
 
-    // let getExpense = (userId, callback) => {
+    let getExpense = (userId, callback) => {
 
-    //     const values = [userId];
+        const values = [userId];
 
-    //     dbPoolInstance.query('SELECT * from plans WHERE user_id=$1', [userId], (error, queryResult) => {
-    //         if (error) {
-    //             // invoke callback function with results after query has executed
-    //             callback(error, null);
+        dbPoolInstance.query('SELECT * from expenses WHERE user_id=$1', [userId], (error, queryResult) => {
+            if (error) {
+                callback(error, null);
 
-    //         } else {
+            } else {
 
-    //             if (queryResult.rows.length > 0) {
-    //                 callback(null, queryResult.rows[0]);
-    //             } else {
-    //                 callback(null, null);
-    //             }
-    //         }
-    //     });
-    // }
+                if (queryResult.rows.length > 0) {
+                    callback(null, queryResult.rows[0]);
+                } else {
+                    callback(null, null);
+                }
+            }
+        });
+    }
 
     return {
         setExpense,
