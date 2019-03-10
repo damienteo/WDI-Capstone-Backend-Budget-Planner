@@ -44,6 +44,35 @@ module.exports = (db) => {
         });
     }
 
+    let deleteExpense = (request, response) => {
+
+        let expenseId = request.body.id;
+        let userId = request.body.userId;
+        let userSession = request.body.userSession;
+
+        db.expenses.deleteExpense(expenseId, userId, (error, expenses) => {
+
+            if (error) {
+
+                console.error('Error while creating expense', error);
+                response.status(400).send(err);
+
+            } else {
+
+                if (expenses === null) {
+                    response.status(201).send({
+                        message: 'Unable to delete expense'
+                    });
+                } else {
+                    response.status(201).send({
+                        expenses: expenses,
+                        message: 'Expense deleted'
+                    });
+                }
+            }
+        });
+    }
+
     /**
      * ===========================================
      * Export controller functions as a module
@@ -51,6 +80,7 @@ module.exports = (db) => {
      */
     return {
         setExpense,
+        deleteExpense
     };
 
 }

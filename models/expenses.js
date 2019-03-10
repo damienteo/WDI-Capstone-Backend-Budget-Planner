@@ -38,8 +38,34 @@ module.exports = (dbPoolInstance) => {
         });
     }
 
+    let deleteExpense = (id, userId, callback) => {
+
+        const values = [id, userId];
+
+        dbPoolInstance.query(`
+        DELETE FROM expenses 
+        WHERE id = ${id}
+        AND user_id = ${userId}
+        RETURNING *
+        `, (error, queryResult) => {
+            if (error) {
+                // invoke callback function with results after query has executed
+                callback(error, null);
+
+            } else {
+
+                if (queryResult.rows.length > 0) {
+                    callback(null, queryResult.rows);
+                } else {
+                    callback(null, null);
+                }
+            }
+        });
+    }
+
     return {
         setExpense,
+        deleteExpense,
     };
 
 }

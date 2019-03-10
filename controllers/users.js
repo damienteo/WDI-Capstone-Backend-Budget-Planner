@@ -25,7 +25,6 @@ module.exports = (db) => {
 
                 //users will return values only in the event of a successful registration
                 if (users !== null) {
-                    console.log(users)
                     let userId = users.id;
                     let hashUserId = sha256(loginString + userId);
 
